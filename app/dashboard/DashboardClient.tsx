@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { logout } from '@/app/api/hello/actions/auth';
 import { addInspiration, deleteInspiration, editInspiration } from '@/app/api/hello/actions/inspiration';
 
@@ -43,11 +44,9 @@ export default function DashboardClient({ user, initialInspirations, initialArti
     setLoading(true);
     
     try {
-      await addInspiration(formData);
+      const newInspiration = await addInspiration(formData);
       setNewInspiration('');
-      // For now, just add to local state
-      const content = formData.get('content') as string;
-      setInspirations([{ id: Date.now().toString(), content, createdAt: new Date() }, ...inspirations]);
+      setInspirations([newInspiration, ...inspirations]);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to add inspiration');
     } finally {
@@ -166,25 +165,25 @@ export default function DashboardClient({ user, initialInspirations, initialArti
                     <div>
                       <h3 className="font-medium text-black dark:text-zinc-50">{article.title}</h3>
                       <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                        {new Date(article.createdAt).toLocaleDateString()}
+                        {new Date(article.createdAt).toISOString().split('T')[0]}
                       </p>
                     </div>
-                    <a
+                    <Link
                       href={`/dashboard/editor/${article.id}`}
                       className="py-1 px-3 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 text-sm font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
                     >
                       Edit
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </div>
             )}
-            <a
+            <Link
               href="/dashboard/editor/new"
               className="mt-4 inline-block w-full py-2 px-4 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors text-center"
             >
               Create New Article
-            </a>
+            </Link>
           </div>
         )}
 

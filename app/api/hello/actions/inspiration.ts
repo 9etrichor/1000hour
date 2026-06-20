@@ -3,8 +3,17 @@
 import { cookies } from 'next/headers';
 import { prisma } from '@/lib/prisma';
 import { verifyToken } from '@/lib/auth';
-// TODO: Install DOMPurify: npm install dompurify @types/dompurify
-// import DOMPurify from 'dompurify';
+
+// Basic server-side sanitization (DOMPurify doesn't work in server actions)
+function sanitize(input: string): string {
+  return input
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;')
+    .trim();
+}
 
 async function getCurrentUserId() {
   const cookieStore = await cookies();
@@ -29,19 +38,20 @@ export async function addInspiration(formData: FormData) {
     throw new Error('Content is required');
   }
 
-  // const sanitizedContent = DOMPurify.sanitize(content);
-  const sanitizedContent = content.trim();
+  const sanitizedContent = sanitize(content);
 
   if (sanitizedContent.length === 0) {
     throw new Error('Content cannot be empty');
   }
 
-  await prisma.inspiration.create({
+  const inspiration = await prisma.inspiration.create({
     data: {
       content: sanitizedContent,
       userId,
     },
   });
+
+  return inspiration;
 }
 
 export async function deleteInspiration(formData: FormData) {
@@ -97,8 +107,7 @@ export async function editInspiration(formData: FormData) {
     throw new Error('Not authorized');
   }
 
-  // const sanitizedContent = DOMPurify.sanitize(content);
-  const sanitizedContent = content.trim();
+  const sanitizedContent = sanitize(content);
 
   if (sanitizedContent.length === 0) {
     throw new Error('Content cannot be empty');
