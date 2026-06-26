@@ -97,22 +97,22 @@ export default function DashboardClient({ user, initialInspirations, initialArti
   }
 
   return (
-    <div className="flex flex-col flex-1 items-center bg-zinc-50 dark:bg-black font-sans min-h-screen">
+    <div className="flex flex-col flex-1 items-center bg-gray-50 dark:bg-black font-sans min-h-screen">
       <main className="flex flex-col w-full max-w-4xl p-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-6 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-6 border-b border-gray-200 dark:border-gray-800">
           <div>
-            <h1 className="text-3xl font-semibold text-black dark:text-zinc-50 mb-2">
+            <h1 className="text-3xl font-semibold text-black dark:text-gray-50 mb-2">
               Dashboard
             </h1>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               {user.email} • {articles.length} articles
             </p>
           </div>
           <form action={logout}>
             <button
               type="submit"
-              className="py-2 px-4 border border-zinc-300 dark:border-zinc-700 text-zinc-950 dark:text-zinc-50 font-medium rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="py-2 px-4 border border-gray-300 dark:border-gray-700 text-gray-950 dark:text-gray-50 font-medium rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               Sign out
             </button>
@@ -125,8 +125,8 @@ export default function DashboardClient({ user, initialInspirations, initialArti
             onClick={() => setActiveTab('articles')}
             className={`px-4 py-2 rounded-md font-medium transition-colors ${
               activeTab === 'articles'
-                ? 'bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950'
-                : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 hover:bg-zinc-300 dark:hover:bg-zinc-700'
+                ? 'bg-green-700 text-white'
+                : 'bg-gray-200 dark:bg-gray-800 text-gray-950 dark:text-gray-50 hover:bg-gray-300 dark:hover:bg-gray-700'
             }`}
           >
             Articles
@@ -135,8 +135,8 @@ export default function DashboardClient({ user, initialInspirations, initialArti
             onClick={() => setActiveTab('inspirations')}
             className={`px-4 py-2 rounded-md font-medium transition-colors ${
               activeTab === 'inspirations'
-                ? 'bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950'
-                : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 hover:bg-zinc-300 dark:hover:bg-zinc-700'
+                ? 'bg-green-700 text-white'
+                : 'bg-gray-200 dark:bg-gray-800 text-gray-950 dark:text-gray-50 hover:bg-gray-300 dark:hover:bg-gray-700'
             }`}
           >
             Inspirations
@@ -151,28 +151,28 @@ export default function DashboardClient({ user, initialInspirations, initialArti
 
         {/* Articles Tab */}
         {activeTab === 'articles' && (
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4 text-black dark:text-zinc-50">Your Articles</h2>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-black dark:text-gray-50"> Articles</h2>
             {articles.length === 0 ? (
-              <p className="text-zinc-600 dark:text-zinc-400">No articles yet. Create your first article!</p>
+              <p className="text-gray-600 dark:text-gray-400">No articles yet. Create your first article!</p>
             ) : (
               <div className="space-y-3">
                 {articles.map((article) => (
                   <div
                     key={article.id}
-                    className="flex justify-between items-center p-4 border border-zinc-200 dark:border-zinc-700 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                    className="flex justify-between items-center p-4 border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
                     <div>
-                      <h3 className="font-medium text-black dark:text-zinc-50">{article.title}</h3>
-                      <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                      <h3 className="font-medium text-black dark:text-gray-50">{article.title}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {new Date(article.createdAt).toISOString().split('T')[0]}
                       </p>
                     </div>
                     <Link
-                      href={`/dashboard/editor/${article.id}`}
-                      className="py-1 px-3 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 text-sm font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+                      href={`/dashboard/article/${article.id}`}
+                      className="py-1 px-3 bg-green-700 text-white text-sm font-medium rounded-md hover:bg-green-800 transition-colors"
                     >
-                      Edit
+                      View
                     </Link>
                   </div>
                 ))}
@@ -180,7 +180,7 @@ export default function DashboardClient({ user, initialInspirations, initialArti
             )}
             <Link
               href="/dashboard/editor/new"
-              className="mt-4 inline-block w-full py-2 px-4 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors text-center"
+              className="mt-4 inline-block w-full py-2 px-4 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors text-center"
             >
               Create New Article
             </Link>
@@ -189,8 +189,8 @@ export default function DashboardClient({ user, initialInspirations, initialArti
 
         {/* Inspirations Tab */}
         {activeTab === 'inspirations' && (
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4 text-black dark:text-zinc-50">Your Inspirations</h2>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-black dark:text-gray-50">Your Inspirations</h2>
             
             {/* Add Inspiration Form */}
             <form action={handleAddInspiration} className="mb-6">
@@ -202,12 +202,12 @@ export default function DashboardClient({ user, initialInspirations, initialArti
                   onChange={(e) => setNewInspiration(e.target.value)}
                   placeholder="Add a new inspiration..."
                   disabled={loading}
-                  className="flex-1 px-4 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-zinc-400 disabled:opacity-50"
+                  className="flex-1 px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={loading || !newInspiration.trim()}
-                  className="py-2 px-4 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="py-2 px-4 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Add
                 </button>
@@ -216,13 +216,13 @@ export default function DashboardClient({ user, initialInspirations, initialArti
 
             {/* Inspirations List */}
             {inspirations.length === 0 ? (
-              <p className="text-zinc-600 dark:text-zinc-400">No inspirations yet. Add your first inspiration!</p>
+              <p className="text-gray-600 dark:text-gray-400">No inspirations yet. Add your first inspiration!</p>
             ) : (
               <div className="space-y-3">
                 {inspirations.map((inspiration) => (
                   <div
                     key={inspiration.id}
-                    className="p-4 border border-zinc-200 dark:border-zinc-700 rounded-md"
+                    className="p-4 border border-gray-200 dark:border-gray-700 rounded-md"
                   >
                     {editingId === inspiration.id ? (
                       <form action={handleEditInspiration} className="flex gap-2">
@@ -237,12 +237,12 @@ export default function DashboardClient({ user, initialInspirations, initialArti
                           value={editContent}
                           onChange={(e) => setEditContent(e.target.value)}
                           disabled={loading}
-                          className="flex-1 px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-zinc-400 disabled:opacity-50"
+                          className="flex-1 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
                         />
                         <button
                           type="submit"
                           disabled={loading || !editContent.trim()}
-                          className="py-2 px-3 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50"
+                          className="py-2 px-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors disabled:opacity-50"
                         >
                           Save
                         </button>
@@ -250,18 +250,18 @@ export default function DashboardClient({ user, initialInspirations, initialArti
                           type="button"
                           onClick={cancelEdit}
                           disabled={loading}
-                          className="py-2 px-3 border border-zinc-300 dark:border-zinc-700 text-zinc-950 dark:text-zinc-50 font-medium rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors disabled:opacity-50"
+                          className="py-2 px-3 border border-gray-300 dark:border-gray-700 text-gray-950 dark:text-gray-50 font-medium rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
                         >
                           Cancel
                         </button>
                       </form>
                     ) : (
                       <div className="flex justify-between items-start gap-4">
-                        <p className="text-black dark:text-zinc-50 flex-1">{inspiration.content}</p>
+                        <p className="text-black dark:text-gray-50 flex-1">{inspiration.content}</p>
                         <div className="flex gap-2">
                           <button
                             onClick={() => startEdit(inspiration)}
-                            className="py-1 px-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                            className="py-1 px-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-50 transition-colors"
                           >
                             Edit
                           </button>
@@ -275,7 +275,7 @@ export default function DashboardClient({ user, initialInspirations, initialArti
                               </button>
                               <button
                                 onClick={() => setShowDeleteConfirm(null)}
-                                className="py-1 px-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                                className="py-1 px-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-50 transition-colors"
                               >
                                 Cancel
                               </button>

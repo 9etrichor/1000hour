@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { addArticle, editArticle, deleteArticle } from '@/app/api/hello/actions/article';
-import { getInspirations } from '@/app/api/hello/actions/inspiration';
 
 interface Inspiration {
   id: string;
@@ -34,6 +33,7 @@ export default function EditorForm({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [textSize, setTextSize] = useState(16);
 
   async function handleSubmit(formData: FormData) {
     setError(null);
@@ -86,6 +86,14 @@ export default function EditorForm({
     );
   }
 
+  const increaseTextSize = () => {
+    setTextSize(prev => Math.min(prev + 2, 32));
+  };
+
+  const decreaseTextSize = () => {
+    setTextSize(prev => Math.max(prev - 2, 12));
+  };
+
   return (
     <div className="flex flex-col gap-6">
       {error && (
@@ -96,7 +104,7 @@ export default function EditorForm({
 
       <form action={handleSubmit} className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <label htmlFor="title" className="text-sm font-medium text-black dark:text-zinc-50">
+          <label htmlFor="title" className="text-sm font-medium text-black dark:text-gray-50">
             Title *
           </label>
           <input
@@ -108,32 +116,59 @@ export default function EditorForm({
             required
             disabled={loading}
             maxLength={200}
-            className="px-4 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-zinc-400 disabled:opacity-50"
+            className="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
             placeholder="Article title"
           />
-          <p className="text-xs text-zinc-600 dark:text-zinc-400">
+          <p className="text-xs text-gray-600 dark:text-gray-400">
             {title.length}/200 characters
           </p>
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="content" className="text-sm font-medium text-black dark:text-zinc-50">
+          <label htmlFor="content" className="text-sm font-medium text-black dark:text-gray-50">
             Content
           </label>
-          <textarea
-            id="content"
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            disabled={loading}
-            rows={12}
-            className="px-4 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-zinc-400 disabled:opacity-50 resize-none"
-            placeholder="Write your article content here..."
-          />
+          <div className="relative">
+            {/* Text Size Controls */}
+            <div className="absolute left-[-48px] top-0 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={increaseTextSize}
+                disabled={loading || textSize >= 32}
+                className="w-10 h-10 flex items-center justify-center bg-gray-200 dark:bg-gray-800 text-gray-950 dark:text-gray-50 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg font-bold"
+
+                title="Increase text size"
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={decreaseTextSize}
+                disabled={loading || textSize <= 12}
+                className="w-10 h-10 flex items-center justify-center bg-gray-200 dark:bg-gray-800 text-gray-950 dark:text-gray-50 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg font-bold"
+                title="Decrease text size"
+              >
+                -
+              </button>
+            </div>
+
+            {/* Content Textarea */}
+            <textarea
+              id="content"
+              name="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              disabled={loading}
+              rows={12}
+              className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 resize-none"
+              style={{ fontSize: `${textSize}px` }}
+              placeholder="Write your article content here..."
+            />
+          </div>
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-black dark:text-zinc-50">
+          <label className="text-sm font-medium text-black dark:text-gray-50">
             Linked Inspirations
           </label>
           <div className="flex flex-wrap gap-2">
@@ -143,17 +178,17 @@ export default function EditorForm({
                 type="button"
                 onClick={() => toggleInspiration(inspiration.id)}
                 disabled={loading}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                className={`cursor-pointer px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                   selectedInspirations.includes(inspiration.id)
-                    ? 'bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950'
-                    : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 hover:bg-zinc-300 dark:hover:bg-zinc-700'
+                    ? 'bg-green-700 text-white'
+                    : 'bg-gray-200 dark:bg-gray-800 text-gray-950 dark:text-gray-50 hover:bg-gray-300 dark:hover:bg-gray-700'
                 } disabled:opacity-50`}
               >
                 {inspiration.content}
               </button>
             ))}
             {inspirations.length === 0 && (
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 No inspirations available. Add some in the dashboard first.
               </p>
             )}
@@ -164,7 +199,7 @@ export default function EditorForm({
           <button
             type="submit"
             disabled={loading || !title.trim()}
-            className="flex-1 py-2 px-4 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="cursor-pointer flex-1 py-2 px-4 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Saving...' : articleId ? 'Update Article' : 'Create Article'}
           </button>
@@ -185,7 +220,7 @@ export default function EditorForm({
                     type="button"
                     onClick={() => setShowDeleteConfirm(false)}
                     disabled={loading}
-                    className="py-2 px-4 border border-zinc-300 dark:border-zinc-700 text-zinc-950 dark:text-zinc-50 font-medium rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors disabled:opacity-50"
+                    className="py-2 px-4 border border-gray-300 dark:border-gray-700 text-gray-950 dark:text-gray-50 font-medium rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
                   >
                     Cancel
                   </button>

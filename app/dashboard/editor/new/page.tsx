@@ -1,6 +1,7 @@
 import { verifyToken } from '@/lib/auth';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import EditorForm from '@/components/EditorForm';
 import { getInspirations } from '@/app/api/hello/actions/inspiration';
 
@@ -20,18 +21,18 @@ export default async function NewArticlePage() {
   const inspirations = await getInspirations();
 
   return (
-    <div className="flex flex-col flex-1 items-center bg-zinc-50 dark:bg-black font-sans min-h-screen">
+    <div className="flex flex-col flex-1 items-center bg-gray-50 dark:bg-black font-sans min-h-screen">
       <main className="flex flex-col w-full max-w-4xl p-8">
         <div className="mb-6">
-          <a
+          <Link
             href="/dashboard"
-            className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50"
+            className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-50"
           >
             ← Back to Dashboard
-          </a>
+          </Link>
         </div>
         
-        <h1 className="text-3xl font-semibold mb-6 text-black dark:text-zinc-50">
+        <h1 className="text-3xl font-semibold mb-6 text-black dark:text-gray-50">
           Create New Article
         </h1>
 

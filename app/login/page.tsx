@@ -21,12 +21,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black font-sans min-h-screen">
-      <main className="flex flex-col w-full max-w-md p-8 bg-white dark:bg-zinc-900 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-semibold text-center mb-2 text-black dark:text-zinc-50">
+    <div className="flex flex-col flex-1 items-center justify-center bg-gray-50 dark:bg-black font-sans min-h-screen">
+      <main className="flex flex-col w-full max-w-md p-8 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-semibold text-center mb-2 text-black dark:text-gray-50">
           Welcome Back
         </h1>
-        <p className="text-center text-zinc-600 dark:text-zinc-400 mb-8">
+        <p className="text-center text-gray-600 dark:text-gray-400 mb-8">
           Sign in to your account
         </p>
 
@@ -38,7 +38,7 @@ export default function LoginPage() {
 
         <form action={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm font-medium text-black dark:text-zinc-50">
+            <label htmlFor="email" className="text-sm font-medium text-black dark:text-gray-50">
               Email
             </label>
             <input
@@ -47,13 +47,13 @@ export default function LoginPage() {
               type="email"
               required
               disabled={loading}
-              className="px-4 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-zinc-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="you@example.com"
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="password" className="text-sm font-medium text-black dark:text-zinc-50">
+            <label htmlFor="password" className="text-sm font-medium text-black dark:text-gray-50">
               Password
             </label>
             <input
@@ -62,7 +62,7 @@ export default function LoginPage() {
               type="password"
               required
               disabled={loading}
-              className="px-4 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-black dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-zinc-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-black dark:text-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="••••••••"
             />
           </div>
@@ -70,15 +70,15 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-zinc-950 dark:bg-zinc-50 text-white dark:text-zinc-950 font-medium rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2 px-4 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="font-medium text-zinc-950 dark:text-zinc-50 hover:underline">
+          <Link href="/register" className="font-medium text-gray-950 dark:text-gray-50 hover:underline">
             Sign up
           </Link>
         </p>
